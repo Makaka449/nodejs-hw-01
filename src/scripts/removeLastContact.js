@@ -1,5 +1,8 @@
-import fs from 'fs/promises'; 
-import { PATH_DB } from '../constants/contacts.js';
+import fs from 'fs/promises';
+import path from 'node:path';
+
+// Складаємо шлях до файлу з контактами
+const PATH_DB = path.join(__dirname, '../db/db.json');
 
 export const removeLastContact = async () => {
     try {
@@ -9,6 +12,7 @@ export const removeLastContact = async () => {
         if (contacts.length > 0) {
             contacts.pop();
             await fs.writeFile(PATH_DB, JSON.stringify(contacts, null, 2), 'utf-8');
+            console.log('Last contact removed successfully.');
         } else {
             console.log('No contacts to remove');
         }
@@ -17,9 +21,10 @@ export const removeLastContact = async () => {
     }
 };
 
-
-removeLastContact().then(() => {
-    console.log('finish');
-}).catch(err => {
-    console.error('Error in removeLastContact:', err);
-});
+removeLastContact()
+    .then(() => {
+        console.log('finish');
+    })
+    .catch(err => {
+        console.error('Error in removeLastContact:', err);
+    });
