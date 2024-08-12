@@ -1,18 +1,13 @@
-import path from 'node:path';
+import { PATH_DB } from '../constants/contacts.js';
 import fs from 'node:fs/promises';
-
-
-const PATH_DB = path.join(__dirname, '../db/db.json');
 
 export const removeAllContacts = async () => {
     try {
-        await fs.writeFile(PATH_DB, JSON.stringify([], null, 2), 'utf-8');
-        console.log('All contacts have been removed.');
+        await fs.writeFile(PATH_DB, JSON.stringify([], null, 2), 'utf-8')
     } catch (err) {
-        console.log('Error removing contacts:', err);
+        console.log(err)
     }
 };
 
-removeAllContacts().then(() => {
-    console.log('finish');
-});
+removeAllContacts();
+console.log('finish')
